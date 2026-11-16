@@ -1,0 +1,26 @@
+name: Compilar Contador
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compilar y empaquetar
+        run: |
+          javac Contador.java
+          echo "Main-Class: Contador" > manifest.txt
+          jar cfm Contador.jar manifest.txt *.class
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Contador-jar
+          path: Contador.jar
