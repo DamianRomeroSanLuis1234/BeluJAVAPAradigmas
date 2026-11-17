@@ -1,4 +1,4 @@
-name: Compilar Contador
+name: Compilar EjemploSwing2
 on:
   push:
   workflow_dispatch:
@@ -16,11 +16,11 @@ jobs:
 
       - name: Compilar y empaquetar
         run: |
-          javac Contador.java
-          echo "Main-Class: Contador" > manifest.txt
-          jar cfm Contador.jar manifest.txt *.class
+          javac EjemploSwing2.java
+          echo "Main-Class: EjemploSwing2" > manifest.txt
+          jar cfm EjemploSwing2.jar manifest.txt EjemploSwing2*.class
 
       - uses: actions/upload-artifact@v4
         with:
-          name: Contador-jar
-          path: Contador.jar
+          name: EjemploSwing2-jar
+          path: EjemploSwing2.jar
