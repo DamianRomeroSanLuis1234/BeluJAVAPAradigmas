@@ -1,0 +1,60 @@
+public class EjemploSwing2 extends JFrame {
+
+    /** Etiqueta con el contador */
+    JLabel lblCont;
+
+    /** Constructor */
+    public EjemploSwing2() {
+        setTitle("Segundero");
+        setSize(300, 200);
+        getContentPane().setLayout(new GridLayout(1, 2));
+
+        // Etiqueta con ícono (el ícono se dibuja por código, así no hace falta ningún archivo)
+        JLabel lblEtiq = new JLabel("Contador:", crearIconoReloj(), SwingConstants.CENTER);
+
+        // Etiqueta para los segundos
+        lblCont = new JLabel("0", SwingConstants.CENTER);
+        lblCont.setFont(new Font("SansSerif", Font.BOLD, 32));
+
+        // Timer: cada segundo incrementa el contador
+        Timer t = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                lblCont.setText("" + (Integer.parseInt(lblCont.getText()) + 1));
+            }
+        });
+        t.setRepeats(true);
+        t.start();
+
+        getContentPane().add(lblEtiq);
+        getContentPane().add(lblCont);
+
+        // Evento para cerrar la ventana
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+    }
+
+    /** Dibuja un relojito de 48x48 y lo devuelve como ImageIcon */
+    private ImageIcon crearIconoReloj() {
+        BufferedImage img = new BufferedImage(48, 48, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setColor(Color.WHITE);
+        g.fillOval(2, 2, 44, 44);
+        g.setColor(new Color(0x185FA5));
+        g.setStroke(new BasicStroke(3));
+        g.drawOval(2, 2, 44, 44);
+        g.drawLine(24, 24, 24, 10);   // aguja larga
+        g.drawLine(24, 24, 34, 28);   // aguja corta
+        g.dispose();
+        return new ImageIcon(img);
+    }
+
+    /** Main */
+    public static void main(String[] args) {
+        EjemploSwing2 e = new EjemploSwing2();
+        e.setVisible(true);
+    }
+}
